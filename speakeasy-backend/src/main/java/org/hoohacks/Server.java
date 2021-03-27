@@ -17,6 +17,13 @@ public class Server {
             var voices = TTS.getInstance().getVoices();
             return gson.toJson(voices);
         });
+
+        post("/sample", (req, res) -> {
+            String voiceName = gson.fromJson(req.body(), SampleMessageData.class).getVoiceName();
+            AudioPlayer player = new AudioPlayer();
+            player.play(TTS.getInstance().getSpeechRaw(voiceName, SAMPLE_MESSAGE));
+            return null;
+        });
     }
 
     public static void stop() {
@@ -25,5 +32,13 @@ public class Server {
 
     public static String getHostUrl() {
         return "http://localhost:" + PORT;
+    }
+
+    private static class SampleMessageData {
+        private String voiceName;
+
+        public String getVoiceName() {
+            return voiceName;
+        }
     }
 }
