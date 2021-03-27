@@ -5,8 +5,7 @@ import static spark.Spark.*;
 
 public class Server {
     public static final int PORT = 4567;
-    public static final String SAMPLE_TEXT = "Hello, World!";
-    public static final TTS tts = TTS.getInstance();
+    public static final String SAMPLE_MESSAGE = "Hello, World!";
     public static final Gson gson = new Gson();
 
     public static void start() {
@@ -15,7 +14,7 @@ public class Server {
 
         get("/voices", (req, res) -> {
             // get english voices
-            var voices = tts.getVoices();
+            var voices = TTS.getInstance().getVoices();
             return gson.toJson(voices);
         });
     }
