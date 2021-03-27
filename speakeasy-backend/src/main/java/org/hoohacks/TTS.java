@@ -29,10 +29,12 @@ public class TTS {
     }
 
     private final TextToSpeechClient client;
+    private final String language;
     private final Set<String> voiceNames;
 
     public TTS(String language) {
         try {
+            this.language = language;
             GoogleCredentials credentials;
             try (var credStream = TTS.class.getClassLoader().getResourceAsStream("speakeasy-gcp-tts.key.json")) {
                 credentials = ServiceAccountCredentials.fromStream(Objects.requireNonNull(credStream));
@@ -60,14 +62,25 @@ public class TTS {
         return Collections.unmodifiableCollection(voiceNames);
     }
 
-    public byte[] getSpeech(String voiceName, String text) {
+    public byte[] getSpeechRaw(String voiceName, String text) {
+        return getSpeech(voiceName, text, AudioEncoding.LINEAR16);
+    }
+
+    public byte[] getSpeechMP3(String voiceName, String text) {
+        return getSpeech(voiceName, text, AudioEncoding.MP3);
+    }
+
+    private byte[] getSpeech(String voiceName, String text, AudioEncoding encoding) {
         if (!voiceNames.contains(voiceName)) {
             throw new IllegalArgumentException("Unrecognized voice name: " + voiceName);
         }
 
         SynthesisInput input = SynthesisInput.newBuilder().setText(text).build();
-        AudioConfig audioConfig = AudioConfig.newBuilder().setAudioEncoding(AudioEncoding.LINEAR16).build();
-        var voiceParams = VoiceSelectionParams.newBuilder().setName(voiceName).build();
+        AudioConfig audioConfig = AudioConfig.newBuilder().setAudioEncoding(encoding).build();
+        var voiceParams = VoiceSelectionParams.newBuilder()
+                .setLanguageCode(language)
+                .setName(voiceName)
+                .build();
 
         var response = client.synthesizeSpeech(input, voiceParams, audioConfig);
         return response.getAudioContent().toByteArray();
