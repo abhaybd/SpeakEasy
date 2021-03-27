@@ -4,19 +4,25 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.texttospeech.v1.AudioConfig;
 import com.google.cloud.texttospeech.v1.AudioEncoding;
-import com.google.cloud.texttospeech.v1.ListVoicesRequest;
 import com.google.cloud.texttospeech.v1.SynthesisInput;
+import com.google.cloud.texttospeech.v1.SynthesizeSpeechRequest;
+import com.google.cloud.texttospeech.v1.SynthesizeSpeechResponse;
 import com.google.cloud.texttospeech.v1.TextToSpeechClient;
 import com.google.cloud.texttospeech.v1.TextToSpeechSettings;
 import com.google.cloud.texttospeech.v1.Voice;
 import com.google.cloud.texttospeech.v1.VoiceSelectionParams;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class TTS {
 
@@ -30,7 +36,7 @@ public class TTS {
 
     private final TextToSpeechClient client;
     private final String language;
-    private final Set<String> voiceNames;
+    private final Map<String, Voice> voiceMap;
 
     public TTS(String language) {
         try {
@@ -44,14 +50,11 @@ public class TTS {
                     .setCredentialsProvider(() -> credentials)
                     .build();
             client = TextToSpeechClient.create(settings);
-            var req = ListVoicesRequest.getDefaultInstance();
-            var response = client.listVoices(req);
+            var response = client.listVoices(language);
             List<Voice> voices = response.getVoicesList();
-            voiceNames = new HashSet<>(voices.size());
+            voiceMap = new HashMap<>(voices.size());
             for (Voice v : voices) {
-                if (v.getLanguageCodesList().contains(language)) {
-                    voiceNames.add(v.getName());
-                }
+                voiceMap.put(v.getName(), v);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -59,30 +62,43 @@ public class TTS {
     }
 
     public Collection<String> getVoices() {
-        return Collections.unmodifiableCollection(voiceNames);
+        return Collections.unmodifiableCollection(voiceMap.keySet());
     }
 
-    public byte[] getSpeechRaw(String voiceName, String text) {
-        return getSpeech(voiceName, text, AudioEncoding.LINEAR16);
-    }
-
-    public byte[] getSpeechMP3(String voiceName, String text) {
-        return getSpeech(voiceName, text, AudioEncoding.MP3);
-    }
-
-    private byte[] getSpeech(String voiceName, String text, AudioEncoding encoding) {
-        if (!voiceNames.contains(voiceName)) {
+    public AudioInputStream getSpeechRaw(String voiceName, String text) {
+        if (!voiceMap.containsKey(voiceName)) {
             throw new IllegalArgumentException("Unrecognized voice name: " + voiceName);
         }
 
         SynthesisInput input = SynthesisInput.newBuilder().setText(text).build();
-        AudioConfig audioConfig = AudioConfig.newBuilder().setAudioEncoding(encoding).build();
+        AudioConfig audioConfig = AudioConfig.newBuilder().setAudioEncoding(AudioEncoding.LINEAR16).build();
         var voiceParams = VoiceSelectionParams.newBuilder()
                 .setLanguageCode(language)
                 .setName(voiceName)
                 .build();
 
         var response = client.synthesizeSpeech(input, voiceParams, audioConfig);
-        return response.getAudioContent().toByteArray();
+        byte[] bytes = response.getAudioContent().toByteArray();
+        ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+        try {
+            return AudioSystem.getAudioInputStream(in);
+        } catch (UnsupportedAudioFileException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public byte[] getSpeechMP3(String voiceName, String text) {
+        if (!voiceMap.containsKey(voiceName)) {
+            throw new IllegalArgumentException("Unrecognized voice name: " + voiceName);
+        }
+
+        SynthesisInput input = SynthesisInput.newBuilder().setText(text).build();
+        AudioConfig audioConfig = AudioConfig.newBuilder().setAudioEncoding(AudioEncoding.MP3).build();
+        var voiceParams = VoiceSelectionParams.newBuilder()
+                .setLanguageCode(language)
+                .setName(voiceName)
+                .build();
+
+        return client.synthesizeSpeech(input, voiceParams, audioConfig).getAudioContent().toByteArray();
     }
 }
