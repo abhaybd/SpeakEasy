@@ -9,21 +9,21 @@
         <link rel='stylesheet' type="text/css" href='main.css'>
     </head>
     <body>
-        <div class='title'>
-            <img id='logo' src='speakeasy.png' class='logo disable-select disable-drag' alt='Speakeasy Logo' oncontextmenu="return false">
-            <h1>SpeakEasy</h1>
+        <div class='title-container'>
+            <div id='logo-container'>
+                <img id='logo' src='speakeasy.png' class='disable-select disable-drag' alt='Speakeasy Logo' oncontextmenu="return false">
+            </div>
+            <h1 id='title'>SpeakEasy</h1>
         </div>
         <div class='form'>
-            <form>
-                <label for="name">Your name:</label><br>
-                <input type="text" id="name" name="name"><br>
-                <label for="message">Your message:</label><br>
-                <textarea type="text" id="message" name="message">Your message here...</textarea>
-                <label for="voiceSelector">Your voice:</label>
-                <select id="voiceSelector" class="selector">
-                </select>
-                <input class = "button" type='submit' value='Submit'>
-            </form>
+            <label for="name">Your name:</label><br>
+            <input type="text" id="name" name="name"><br>
+            <label for="message">Your message:</label><br>
+            <textarea type="text" id="message" name="message">Your message here...</textarea><Br>
+            <label for="voiceSelector">Your voice:</label><br>
+            <select id="voiceSelector" class="selector">
+            </select><br>
+            <input class = "button" type='submit' value='Submit'>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
