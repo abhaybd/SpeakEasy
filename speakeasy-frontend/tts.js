@@ -12,8 +12,7 @@ async function getVoices() {
 function playSample(voiceName) {
     fetch(BACKEND_URL + "/sample", {
         method: "post",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(voiceName)
+        body: JSON.stringify({voiceName: voiceName})
     }).then(resp => {
         if (!resp.ok) {
             alert("There was an error contacting the server!");
