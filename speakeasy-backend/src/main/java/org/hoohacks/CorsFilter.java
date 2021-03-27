@@ -27,6 +27,6 @@ public class CorsFilter {
                 corsHeaders.forEach(response::header);
             }
         };
-        Spark.after(filter);
+        Spark.afterAfter(filter);
     }
 }
