@@ -25,4 +25,8 @@ public class Server {
     public static void stop() {
         spark.Spark.stop();
     }
+
+    public static String getHostUrl() {
+        return "http://localhost:" + PORT;
+    }
 }
