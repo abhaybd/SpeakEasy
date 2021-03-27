@@ -5,24 +5,26 @@ import static spark.Spark.*;
 
 public class Server {
     public static final int PORT = 4567;
+    public static final String SAMPLE_TEXT = "Hello, World!";
+    public static final TTS tts = TTS.getInstance();
+    public static final Gson gson = new Gson();
 
     public static void start() {
-        start(PORT);
-    }
-
-    public static void start(int port) {
-        port(port);
+        port(PORT);
         staticFiles.location("/public");
 
         get("/voices", (req, res) -> {
             // get english voices
-            Gson gson = new Gson();
-            var voices = TTS.getInstance().getVoices();
+            var voices = tts.getVoices();
             return gson.toJson(voices);
         });
     }
 
     public static void stop() {
         spark.Spark.stop();
+    }
+
+    public static String getHostUrl() {
+        return "http://localhost:" + PORT;
     }
 }
