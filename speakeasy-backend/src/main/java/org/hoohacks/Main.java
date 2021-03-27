@@ -58,7 +58,7 @@ public class Main {
         Server.start();
         stop.setEnabled(true);
         try {
-            desktop.browse(URI.create("http://localhost:5000"));
+            desktop.browse(URI.create(Server.getHostUrl()));
         } catch (IOException e) {
             e.printStackTrace();
         }
