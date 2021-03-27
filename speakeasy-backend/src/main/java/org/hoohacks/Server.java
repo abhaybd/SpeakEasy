@@ -9,15 +9,25 @@ public class Server {
     public static final Gson gson = new Gson();
 
     public static void start() {
-        port(PORT);
+        // serve static files from src/main/resources/public
         staticFiles.location("/public");
 
+        // Set port for server
+        port(PORT);
+
+        // redirect localhost:PORT to localhost:PORT/index.html
+        redirect.get("/", "/index.html");
+
+        // Custom 404 page
+        notFound("<html><body><h1>Error 404: Page not found</h1></body></html>");
+
+        // Get a list of english voices
         get("/voices", (req, res) -> {
-            // get english voices
             var voices = TTS.getInstance().getVoices();
             return gson.toJson(voices);
         });
 
+        // Play an audio sample of the requested voice
         post("/sample", (req, res) -> {
             String voiceName = gson.fromJson(req.body(), SampleMessageData.class).getVoiceName();
             AudioPlayer player = new AudioPlayer();
@@ -25,6 +35,7 @@ public class Server {
             return null;
         });
 
+        // Speak the requested text in the requested voice
         post("/speak", (req, res) -> {
             SpeakMessageData data = gson.fromJson(req.body(), SpeakMessageData.class);
             String voiceName = data.getVoiceName();
