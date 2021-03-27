@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -58,8 +59,10 @@ public class TTS {
         }
     }
 
-    public Collection<String> getVoices() {
-        return Collections.unmodifiableCollection(voiceMap.keySet());
+    public List<VoiceData> getVoices() {
+        return voiceMap.values().stream()
+                .map(v -> new VoiceData(v.getName(), v.getSsmlGender().toString()))
+                .collect(Collectors.toList());
     }
 
     public AudioInputStream getSpeechRaw(String voiceName, String text) {
@@ -97,5 +100,15 @@ public class TTS {
                 .build();
 
         return client.synthesizeSpeech(input, voiceParams, audioConfig).getAudioContent().toByteArray();
+    }
+
+    public static class VoiceData {
+        public final String name;
+        public final String gender;
+
+        public VoiceData(String name, String gender) {
+            this.name = name;
+            this.gender = gender;
+        }
     }
 }
