@@ -174,3 +174,4 @@ $RECYCLE.BIN/
 
 .idea/*
 *.iml
+*.key.json
