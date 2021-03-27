@@ -15,6 +15,8 @@ public class Server {
         // Set port for server
         port(PORT);
 
+        CorsFilter.apply();
+
         // redirect localhost:PORT to localhost:PORT/index.html
         redirect.get("/", "/index.html");
 
