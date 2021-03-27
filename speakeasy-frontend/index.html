@@ -5,23 +5,26 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset='UTF-8'>
-
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap" rel="stylesheet">
         <link rel='stylesheet' type="text/css" href='main.css'>
     </head>
     <body>
         <div class='title'>
             <img id='logo' src='speakeasy.png' class='logo disable-select disable-drag' alt='Speakeasy Logo'
                  oncontextmenu="return false">
-            <h1>SpeakEasy</h1>
+            <h1 id = 'heading'>SpeakEasy</h1>
         </div>
-        <label for="name">Your name:</label><br>
-        <input type="text" id="name" name="name"><br>
-        <label for="message">Your message:</label><br>
-        <textarea type="text" id="message" name="message">Your message here...</textarea>
+        <label for="name"> Name:</label><br>
+        <input type="text" id="name" name="Name"><br>
         <label for="voiceSelector">Your voice:</label>
         <select id="voiceSelector" class="selector">
         </select>
-        <input id="submit" type="button" value='submit'>
+        <br/>
+        <label for="message">Your Message:</label><br>
+        <textarea type="text" id="message" name="message">Your message here...</textarea>
+        <br/>
+        <button id="submit" type="button">Submit</button>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"
                 integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
