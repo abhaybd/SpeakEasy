@@ -24,6 +24,15 @@ public class Server {
             player.play(TTS.getInstance().getSpeechRaw(voiceName, SAMPLE_MESSAGE));
             return null;
         });
+
+        post("/speak", (req, res) -> {
+            SpeakMessageData data = gson.fromJson(req.body(), SpeakMessageData.class);
+            String voiceName = data.getVoiceName();
+            String message = data.getName() + " says " + data.getMessage();
+            AudioPlayer player = new AudioPlayer("CABLE Input (VB-Audio Virtual Cable)");
+            player.play(TTS.getInstance().getSpeechRaw(voiceName, message));
+            return null;
+        });
     }
 
     public static void stop() {
@@ -39,6 +48,24 @@ public class Server {
 
         public String getVoiceName() {
             return voiceName;
+        }
+    }
+
+    private static class SpeakMessageData {
+        private String name;
+        private String voiceName;
+        private String message;
+
+        public String getName() {
+            return name;
+        }
+
+        public String getVoiceName() {
+            return voiceName;
+        }
+
+        public String getMessage() {
+            return message;
         }
     }
 }
