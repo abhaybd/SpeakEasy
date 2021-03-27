@@ -11,8 +11,6 @@ import com.google.cloud.texttospeech.v1.Voice;
 import com.google.cloud.texttospeech.v1.VoiceSelectionParams;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +50,10 @@ public class TTS {
             List<Voice> voices = response.getVoicesList();
             voiceMap = new HashMap<>(voices.size());
             for (Voice v : voices) {
-                voiceMap.put(v.getName(), v);
+                String name = v.getName();
+                if (name.toLowerCase().contains("wavenet")) {
+                    voiceMap.put(v.getName(), v);
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -109,6 +110,10 @@ public class TTS {
         public VoiceData(String name, String gender) {
             this.name = name;
             this.gender = gender;
+        }
+
+        public String toString() {
+            return String.format("VoiceData[name=%s, gender=%s]", name, gender);
         }
     }
 }
