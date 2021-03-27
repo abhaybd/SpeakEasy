@@ -14,6 +14,12 @@ public class AudioPlayer {
     private final Mixer.Info info;
     private final Semaphore clipStartSemaphore, clipEndSemaphore;
 
+    public AudioPlayer() {
+        this.info = null;
+        clipStartSemaphore = new Semaphore(1);
+        clipEndSemaphore = new Semaphore(0);
+    }
+
     public AudioPlayer(String deviceName) throws IOException {
         this.info = Arrays.stream(AudioSystem.getMixerInfo())
                 .filter(i -> i.getName().equals(deviceName))
@@ -26,7 +32,7 @@ public class AudioPlayer {
     public void play(AudioInputStream ais) throws LineUnavailableException {
         try {
             clipStartSemaphore.acquire();
-            Clip clip = AudioSystem.getClip(info);
+            Clip clip = info != null ? AudioSystem.getClip(info) : AudioSystem.getClip();
             try {
                 clip.addLineListener(this::lineListener);
                 clip.open(ais);
