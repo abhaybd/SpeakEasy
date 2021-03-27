@@ -1,5 +1,7 @@
+const BACKEND_URL = "http://localhost:4567";
+
 async function getVoices() {
-    let resp = await fetch("/voices");
+    let resp = await fetch(BACKEND_URL + "/voices");
     if (!resp.ok) {
         return null;
     } else {
@@ -8,7 +10,7 @@ async function getVoices() {
 }
 
 function playSample(voiceName) {
-    fetch("/sample", {
+    fetch(BACKEND_URL + "/sample", {
         method: "post",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(voiceName)
@@ -26,7 +28,7 @@ function sayText(voiceName, userName, message) {
         message: message
     };
 
-    fetch("/speak", {
+    fetch(BACKEND_URL + "/speak", {
         method: "post",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(data)
