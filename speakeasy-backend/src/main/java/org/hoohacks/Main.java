@@ -1,8 +1,10 @@
 package org.hoohacks;
 
+import java.util.Objects;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
@@ -25,6 +27,8 @@ public class Main extends Application {
 
         Scene scene = new Scene(webView, 700, 750);
 
+        primaryStage.getIcons().add(
+                new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("icon.png"))));
         primaryStage.setScene(scene);
         primaryStage.show();
 
