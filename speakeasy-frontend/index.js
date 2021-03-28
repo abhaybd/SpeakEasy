@@ -32,10 +32,9 @@
     let submitButton = document.getElementById("submit");
     submitButton.onclick = function () {
         let voiceName = document.getElementById("voiceSelector").value;
-        let userName = document.getElementById("name").value;
         let messageBox = document.getElementById("message");
         let message = messageBox.value;
         messageBox.value = "";
-        sayText(voiceName, userName, message);
+        sayText(voiceName, message);
     }
 })();

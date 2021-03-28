@@ -18,9 +18,8 @@ function playSample(voiceName) {
     });
 }
 
-function sayText(voiceName, userName, message) {
+function sayText(voiceName, message) {
     let data = {
-        name: userName,
         voiceName: voiceName,
         message: message
     };
