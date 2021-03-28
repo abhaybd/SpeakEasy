@@ -1,7 +1,7 @@
-$(function() {
+(function() {
     getVoices().then(voices => {
         if (voices !== null) {
-            let dropdown = $("#voiceSelector");
+            let dropdown = document.getElementById("voiceSelector");
             voices.sort((a,b) => {
                 if (a.gender !== b.gender) {
                     return a.gender > b.gender ? 1 : -1;
@@ -12,22 +12,28 @@ $(function() {
             voices.forEach((voice, i) => {
                 let gender = voice.gender.toLowerCase();
                 gender = gender.charAt(0).toUpperCase() + gender.substring(1);
-                dropdown.append(`<option value=${voice.name}>Voice ${i} - ${gender}</option>`)
+                let child = document.createElement("option");
+                child.setAttribute("value", voice.name);
+                if (i === 0) {
+                    child.setAttribute("selected", "");
+                }
+                child.appendChild(document.createTextNode(`Voice ${i} - ${gender}`));
+                dropdown.appendChild(child);
             });
-            $(dropdown.firstChild).attr("selected");
 
-            dropdown.on("change", function() {
+            dropdown.onchange = function() {
                 playSample(this.value);
-            });
+            }
         } else {
             alert("Error contacting server!");
         }
     });
 
-    $("#submit").click(function() {
-        let voiceName = $("#voiceSelector").val();
-        let userName = $("#name").val();
-        let message = $("#message").val();
+    let submitButton = document.getElementById("submit");
+    submitButton.onclick = function() {
+        let voiceName = document.getElementById("voiceSelector").value;//$("#voiceSelector").val();
+        let userName = document.getElementById("name").value;//$("#name").val();
+        let message = document.getElementById("message").value;//$("#message").val();
         sayText(voiceName, userName, message);
-    });
-});
+    }
+})();
