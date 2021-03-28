@@ -1,10 +1,14 @@
 package org.hoohacks;
 
 import com.google.gson.Gson;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import spark.Spark;
 
 import static spark.Spark.*;
@@ -63,10 +67,22 @@ public class Server {
             SpeakMessageData data = gson.fromJson(req.body(), SpeakMessageData.class);
             String voiceName = data.getVoiceName();
             String message = data.getMessage();
+            byte[] bytes = TTS.getInstance().getSpeechRawBytes(voiceName, message);
             threadPool.submit(() -> {
                 try {
-                    pipedPlayer.play(TTS.getInstance().getSpeechRaw(voiceName, message));
-                } catch (LineUnavailableException e) {
+                    ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+                    AudioInputStream ais = AudioSystem.getAudioInputStream(bais);
+                    pipedPlayer.play(ais);
+                } catch (LineUnavailableException | UnsupportedAudioFileException | IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            threadPool.submit(() -> {
+                try {
+                    ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+                    AudioInputStream ais = AudioSystem.getAudioInputStream(bais);
+                    defaultPlayer.play(ais);
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
                     e.printStackTrace();
                 }
             });

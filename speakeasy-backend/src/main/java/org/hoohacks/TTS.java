@@ -67,6 +67,16 @@ public class TTS {
     }
 
     public AudioInputStream getSpeechRaw(String voiceName, String text) {
+        byte[] bytes = getSpeechRawBytes(voiceName, text);
+        ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+        try {
+            return AudioSystem.getAudioInputStream(in);
+        } catch (UnsupportedAudioFileException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public byte[] getSpeechRawBytes(String voiceName, String text) {
         if (!voiceMap.containsKey(voiceName)) {
             throw new IllegalArgumentException("Unrecognized voice name: " + voiceName);
         }
@@ -79,16 +89,10 @@ public class TTS {
                 .build();
 
         var response = client.synthesizeSpeech(input, voiceParams, audioConfig);
-        byte[] bytes = response.getAudioContent().toByteArray();
-        ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-        try {
-            return AudioSystem.getAudioInputStream(in);
-        } catch (UnsupportedAudioFileException | IOException e) {
-            throw new RuntimeException(e);
-        }
+        return response.getAudioContent().toByteArray();
     }
 
-    public byte[] getSpeechMP3(String voiceName, String text) {
+    public byte[] getSpeechMP3Bytes(String voiceName, String text) {
         if (!voiceMap.containsKey(voiceName)) {
             throw new IllegalArgumentException("Unrecognized voice name: " + voiceName);
         }
