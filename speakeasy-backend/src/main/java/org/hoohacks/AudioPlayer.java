@@ -52,7 +52,6 @@ public class AudioPlayer {
 
     private void lineListener(LineEvent event) {
         if (event.getType() == LineEvent.Type.STOP) {
-            System.out.println("Stopping!");
             clipEndSemaphore.drainPermits();
             clipEndSemaphore.release();
         }

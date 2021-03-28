@@ -12,11 +12,11 @@ function send() {
     }
 }
 
-(function() {
+(function () {
     getVoices().then(voices => {
         if (voices !== null) {
             let dropdown = document.getElementById("voiceSelector");
-            voices.sort((a,b) => {
+            voices.sort((a, b) => {
                 if (a.gender !== b.gender) {
                     return a.gender > b.gender ? 1 : -1;
                 } else {
@@ -31,11 +31,11 @@ function send() {
                 if (i === 0) {
                     child.setAttribute("selected", "");
                 }
-                child.appendChild(document.createTextNode(`Voice ${i} - ${gender}`));
+                child.appendChild(document.createTextNode(`Voice ${i + 1} - ${gender}`));
                 dropdown.appendChild(child);
             });
 
-            dropdown.onchange = function() {
+            dropdown.onchange = function () {
                 playSample(this.value);
             }
         } else {
@@ -47,7 +47,7 @@ function send() {
     submitButton.onclick = send;
 
     // Send when enter is pressed
-    document.onkeydown = function(e) {
+    document.onkeydown = function (e) {
         if (e.key === "Enter" && document.activeElement === document.getElementById("message")) {
             e.preventDefault();
             send();
