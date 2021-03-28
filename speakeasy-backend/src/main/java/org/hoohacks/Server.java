@@ -15,6 +15,8 @@ public class Server {
         // Set port for server
         port(PORT);
 
+        CorsFilter.apply();
+
         // redirect localhost:PORT to localhost:PORT/index.html
         redirect.get("/", "/index.html");
 
@@ -32,7 +34,7 @@ public class Server {
             String voiceName = gson.fromJson(req.body(), SampleMessageData.class).getVoiceName();
             AudioPlayer player = new AudioPlayer();
             player.play(TTS.getInstance().getSpeechRaw(voiceName, SAMPLE_MESSAGE));
-            return null;
+            return "";
         });
 
         // Speak the requested text in the requested voice
@@ -42,7 +44,7 @@ public class Server {
             String message = data.getName() + " says " + data.getMessage();
             AudioPlayer player = new AudioPlayer("CABLE Input (VB-Audio Virtual Cable)");
             player.play(TTS.getInstance().getSpeechRaw(voiceName, message));
-            return null;
+            return "";
         });
     }
 

@@ -1,0 +1,114 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Titillium Web', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #282c34;
+    color: white;
+    font-size: 20px;
+}
+
+.title-container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100px;
+}
+
+#logo-container {
+    flex: 3;
+    height: 100px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+#logo {
+    height: 100px;
+    width: 100px;
+    display: block;
+    pointer-events: none;
+}
+
+#title {
+    display: block;
+    flex: 7;
+    font-size: 24;
+    text-align: center;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 24px;
+    border: none;
+    cursor: pointer;
+}
+
+#message {
+    min-width: 25em;
+    max-width: 25em;
+    min-height: 8em;
+    max-height: 8em;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 20px;
+}
+
+#voiceSelector {
+    padding-left: 10px;
+    padding-right: 10px;
+    border : 40px;
+    font-size: 20px;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 20px;
+}
+
+#name {
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 20px;
+}
+
+.menu {
+    float: right;
+    display: flex;
+    flex-flow: column nowrap;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.menu:hover {
+    background-color: #f1f1f1;
+}
+
+.disable-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+  
+.disable-drag {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+}

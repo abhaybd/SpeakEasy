@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SpeakEasy</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset='UTF-8'>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap" rel="stylesheet">
+        <link rel='stylesheet' type="text/css" href='main.css'>
+    </head>
+    <body>
+        <div class='title-container'>
+            <div id='logo-container'>
+                <img id='logo' src='speakeasy.png' class='disable-select disable-drag' alt='Speakeasy Logo' oncontextmenu="return false">
+            </div>
+            <h1 id='title'>SpeakEasy</h1>
+        </div>
+        <label for="name">Name:</label>
+        <br>
+        <input type="text" id="name" name="Name" placeholder="Your name here...">
+        <br>
+        <label for="voiceSelector">Your Voice:</label>
+        <br>
+        <select id="voiceSelector" class="selector">
+        </select>
+        <br>
+        <label for="message">Your Message:</label>
+        <br>
+        <textarea type="text" id="message" name="message" placeholder="Your message here..."></textarea>
+        <br>
+        <button id="submit" type="button">Submit</button>
+
+        <script src="tts.js"></script>
+        <script src="index.js"></script>
+    </body>
+</html>
