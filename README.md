@@ -1,4 +1,4 @@
-[!SpeakEasy Logo](assets/speakeasy-small.png)
+![SpeakEasy Logo](assets/speakeasy-small.png)
 
 # SpeakEasy
 
