@@ -9,9 +9,9 @@ function send() {
     // Only send message if it contains alphanumeric characters
     if (/[A-Za-z0-9]/.test(message)) {
         sayText(voiceName, message);
-        errorMessage.style.color = "transparent";
+        errorMessage.style.visibility = "hidden";
     } else {
-        errorMessage.style.color = "red";
+        errorMessage.style.visibility = "visible";
     }
 }
 

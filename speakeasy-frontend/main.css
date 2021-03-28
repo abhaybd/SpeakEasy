@@ -99,7 +99,8 @@ button {
 
 #error-message {
     font-size: 16px;
-    color: transparent;
+    color: red;
+    visibility: hidden;
     width: 100%;
     text-align: center;
 }
