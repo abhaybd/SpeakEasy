@@ -1,3 +1,13 @@
+// Send the message to the TTS
+function send() {
+    let voiceName = document.getElementById("voiceSelector").value;
+    let userName = document.getElementById("name").value;
+    let messageBox = document.getElementById("message");
+    let message = messageBox.value;
+    messageBox.value = "";
+        sayText(voiceName, userName, message);
+}
+
 (function() {
     getVoices().then(voices => {
         if (voices !== null) {
@@ -30,12 +40,19 @@
     });
 
     let submitButton = document.getElementById("submit");
-    submitButton.onclick = function() {
-        let voiceName = document.getElementById("voiceSelector").value;
-        let userName = document.getElementById("name").value;
-        let messageBox = document.getElementById("message");
-        let message = messageBox.value;
-        messageBox.value = "";
-        sayText(voiceName, userName, message);
+    submitButton.onclick = send;
+
+    // Send when enter is pressed
+    document.onkeydown = function(e) {
+        if (!e.repeat && e.key === "Enter") {
+            send();
+        }
+    }
+
+    // Remove newline from message box after message is sent when enter is pressed
+    document.onkeyup = function(e) {
+        if (e.key === "Enter" && document.getElementById("message").value === "\n") {
+            document.getElementById("message").value = "";
+        }
     }
 })();
