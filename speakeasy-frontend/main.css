@@ -97,6 +97,13 @@ button {
     background-color: #f1f1f1;
 }
 
+#error-message {
+    font-size: 16px;
+    color: transparent;
+    width: 100%;
+    text-align: center;
+}
+
 .disable-select {
     -webkit-touch-callout: none;
     -webkit-user-select: none;

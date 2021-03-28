@@ -3,11 +3,15 @@ function send() {
     let voiceName = document.getElementById("voiceSelector").value;
     let messageBox = document.getElementById("message");
     let message = messageBox.value;
+    let errorMessage = document.getElementById("error-message");
+    messageBox.value = "";
 
     // Only send message if it contains alphanumeric characters
     if (/[A-Za-z0-9]/.test(message)) {
-        messageBox.value = "";
         sayText(voiceName, message);
+        errorMessage.style.color = "transparent";
+    } else {
+        errorMessage.style.color = "red";
     }
 }
 
