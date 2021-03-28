@@ -47,10 +47,8 @@ getVoices().then(voices => {
 
 document.getElementById("submit").onclick = send;
 
-// Send when enter is pressed
-document.onkeydown = function (e) {
-    if (e.key === "Enter" && document.activeElement === document.getElementById("message")) {
-        e.preventDefault();
+document.getElementById("message").oninput = function() {
+    if (this.value.includes("\n")) {
         send();
     }
 }
