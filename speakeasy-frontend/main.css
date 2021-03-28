@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family:'Titillium Web', sans-serif;
 }
 
 body {
@@ -9,7 +10,9 @@ body {
     flex-flow: column nowrap;
     justify-content: flex-start;
     align-items: center;
-    max-width: 40vw;
+    background-color: #282c34;
+    color: white;
+    font-size: 20px;
 }
 
 .title-container {
@@ -39,38 +42,43 @@ body {
 #title {
     display: block;
     flex: 7;
-    font-size: 20;
+    font-size: 24;
     text-align: center;
-}
-
-body {
-    background-color: #282c34;
-    color: white;
-    font-family:'Titillium Web', sans-serif;
-    font-size: 20px;
 }
 
 button {
     background-color: #4CAF50;
     color: white;
-    padding: 8px;
+    padding: 8px 12px;
+    border-radius: 5px;
     font-size: 24px;
-    font-family: 'Titillium Web', sans-serif;
     border: none;
     cursor: pointer;
 }
 
 #message {
-    min-width: 30em;
-    max-width: 30em;
-    min-height: 12em;
-    max-height: 12em;
+    min-width: 25em;
+    max-width: 25em;
+    min-height: 8em;
+    max-height: 8em;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 20px;
 }
 
 #voiceSelector {
     padding-left: 10px;
     padding-right: 10px;
     border : 40px;
+    font-size: 20px;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 20px;
+}
+
+#name {
+    padding: 8px;
+    border-radius: 8px;
     font-size: 20px;
 }
 
