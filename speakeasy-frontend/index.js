@@ -15,8 +15,19 @@ $(function() {
                 dropdown.append(`<option value=${voice.name}>Voice ${i} - ${gender}</option>`)
             });
             $(dropdown.firstChild).attr("selected");
+
+            dropdown.on("change", function() {
+                playSample(this.value);
+            });
         } else {
             alert("Error contacting server!");
         }
+    });
+
+    $("#submit").click(function() {
+        let voiceName = $("#voiceSelector").val();
+        let userName = $("#name").val();
+        let message = $("#message").val();
+        sayText(voiceName, userName, message);
     });
 });

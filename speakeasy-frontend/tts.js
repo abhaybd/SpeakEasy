@@ -29,7 +29,6 @@ function sayText(voiceName, userName, message) {
 
     fetch(BACKEND_URL + "/speak", {
         method: "post",
-        headers: {"Content-Type": "application/json"},
         body: JSON.stringify(data)
     }).then(resp => {
         if (!resp.ok) {

@@ -60,28 +60,30 @@ body {
     font-size: 20px;
 }
 
-.button
-{
+button {
     background-color: #4CAF50;
     color: white;
-    padding: 16px;
-    font-size: 16px;
+    padding: 8px;
+    font-size: 24px;
+    font-family: 'Titillium Web', sans-serif;
     border: none;
     cursor: pointer;
+    margin-left: 20px;
 }
 
-#voiceSelector
-{
-    float: right;
-    padding: 40 px;
+#voiceSelector {
+    margin-right: 20px;
+    margin-left: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border : 40px;
     font-size: 20px;
 }
 
-.menu
-{
+.menu {
     float: right;
     display: flex;
-    flex-direction: column;
+    flex-flow: column nowrap;
     color: white;
     padding: 16px;
     font-size: 16px;
@@ -89,8 +91,7 @@ body {
     cursor: pointer;
 }
 
-.menu:hover
-{
+.menu:hover {
     background-color: #f1f1f1;
 }
 
