@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SpeakEasy</title>
+        <link rel='stylesheet' type="text/css" href='main.css'>
+    </head>
+    <body>
+        <h2>Inspiration</h2>
+        <p>We were inspired to help make the internet a more accessible place for those who are ignored by new innovations. In this project, we focused on online meetings, used in schools and offices. Some major services offer some accessibility features, like Zoom and Teams, which offer live captioning that helps those who are hard of hearing. However, there are very few accommodations for those who are nonverbal, mute, or cannot speak for other reasons. Generally, these users would be relegated to communicating only via chat. This excludes them from participating meaningfully in the conversation. Additionally, many organizations disable chat by default. This environment is inequitable for those with disabilities, and we aim to tackle this disparity in this hack.</p>
+
+        <h2>What it does</h2>
+        <p>SpeakEasy is a program that aims to allow users to participate orally in online meetings, when they would otherwise be unable to. At its core, SpeakEasy allows users to enter text into a simple and intuitive interface and uses speech synthesis to verbally speak in the meeting. Instead of building a plugin for a specific meeting program (such as Zoom, Discord, etc.) we opted to create a universal solution that does not require universal adoption and can be used immediately.</p>
+
+        <p>SpeakEasy is a desktop program that runs locally on the user's computer. While running, users should configure their meeting program to use the "virtual microphone" offered by SpeakEasy. (most to all major programs support this) Then, when the user sends a message, SpeakEasy will synthesize speech and feed it to the meeting program through the virtual microphone, where everyone else will hear the message delivered verbally.</p>
+
+        <p>Users also have the option to customize their voice, and are able to select from 10 different high quality voice profiles.</p>
+
+        <h2>How we built it</h2>
+        <p>Our solution consists of a frontend, written in vanilla HTML/CSS/JS, and a backend, written in Java. The backend hosts a server locally, which serves the frontend and also handles communication between the frontend and backend.</p>
+
+        <p>The frontend is rendered using a JavaFX webview and displayed to the user in a native window. When the user interacts with the UI, it sends HTTP requests to the RESTful API offered by the backend.</p>
+
+        <p>The backend server routes are handled with Spark Java. Speech is synthesized with the GCP Text-To-Speech API, and then piped into your meeting program using audio streams with a virtual microphone.</p>
+
+        <p>Our original plan was for the frontend to be written with React and served to your browser from the backend local server. However, we ultimately decided against this approach, opting instead for a native window which offered a more "desktop app" feel.</p>
+
+        <h2>Challenges we ran into</h2>
+        <p>The project presented many new challenges for us to overcome. Interfacing with the Google Cloud Text-to-Speech API and piping it to the virtual microphone proved to be a challenge, mostly due to sparse documentation in various places. Additionally, every single teammember had to work with a new technology, making this a great learning experience.</p>
+
+        <h2>Accomplishments that we're proud of</h2>
+        <p>We are proud of SpeakEasy's robust performance. In multiple meeting apps, configuration was super straight forward, and it made it very easy to communicate effectively without speaking.</p>
+
+        <p>Additionally, getting JavaFX webview to play nice with JavaScript functionality was challenging, but quite rewarding.</p>
+
+        <h2>What we learned</h2>
+        <p>In making this project, every single one of our teammembers had to use new and unfamiliar technologies. From automating build tools with Maven to designing APIs with Spark Java to integrating with external services, we all learned a lot about new frameworks, tools, and ecosystems.</p>
+
+        <p>Additionally, one of the key things we learned was how to design a project effectively, mitigating errors and mistakes from the start, while still maintaining the flexibility to adapt to new challenges.</p>
+
+        <h2>What's next for SpeakEasy</h2>
+        <p>In the interest of accessibility and diversity, we hope to add support for many more languages in the future. Additionally, we would like to add more voices with a variety of accents. SpeakEasy is a tool that can help people regardless of culture, nationality, or ethnicity.</p>
+    </body>
+</html>
