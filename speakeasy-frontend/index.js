@@ -48,15 +48,9 @@ function send() {
 
     // Send when enter is pressed
     document.onkeydown = function(e) {
-        if (!e.repeat && e.key === "Enter") {
+        if (e.key === "Enter" && document.activeElement === document.getElementById("message")) {
+            e.preventDefault();
             send();
-        }
-    }
-
-    // Remove newline from message box after message is sent when enter is pressed
-    document.onkeyup = function(e) {
-        if (e.key === "Enter" && document.getElementById("message").value === "\n") {
-            document.getElementById("message").value = "";
         }
     }
 })();
