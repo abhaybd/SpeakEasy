@@ -23,7 +23,7 @@ public class Main extends Application {
         engine.setJavaScriptEnabled(true);
         engine.load(Server.getHostUrl());
 
-        Scene scene = new Scene(webView, 960, 600);
+        Scene scene = new Scene(webView, 700, 750);
 
         primaryStage.setScene(scene);
         primaryStage.show();
