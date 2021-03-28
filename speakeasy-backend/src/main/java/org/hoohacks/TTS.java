@@ -1,7 +1,6 @@
 package org.hoohacks;
 
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.texttospeech.v1.AudioConfig;
 import com.google.cloud.texttospeech.v1.AudioEncoding;
 import com.google.cloud.texttospeech.v1.SynthesisInput;
@@ -14,7 +13,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -37,10 +35,7 @@ public class TTS {
     public TTS(String language) {
         try {
             this.language = language;
-            GoogleCredentials credentials;
-            try (var credStream = TTS.class.getClassLoader().getResourceAsStream("speakeasy-gcp-tts.key.json")) {
-                credentials = ServiceAccountCredentials.fromStream(Objects.requireNonNull(credStream));
-            }
+            GoogleCredentials credentials = CredentialFactory.getCredentials();
 
             var settings = TextToSpeechSettings.newBuilder()
                     .setCredentialsProvider(() -> credentials)
