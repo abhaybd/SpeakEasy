@@ -1,14 +1,13 @@
 // Send the message to the TTS
 function send() {
     let voiceName = document.getElementById("voiceSelector").value;
-    let userName = document.getElementById("name").value;
     let messageBox = document.getElementById("message");
     let message = messageBox.value;
 
     // Only send message if it contains alphanumeric characters
-    if (/[A-Za-z0-9]/.test(message) && /[A-Za-z0-9]/.test(userName)) {
+    if (/[A-Za-z0-9]/.test(message)) {
         messageBox.value = "";
-        sayText(voiceName, userName, message);
+        sayText(voiceName, message);
     }
 }
 

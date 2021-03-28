@@ -62,7 +62,7 @@ public class Server {
         post("/speak", (req, res) -> {
             SpeakMessageData data = gson.fromJson(req.body(), SpeakMessageData.class);
             String voiceName = data.getVoiceName();
-            String message = data.getName() + " says " + data.getMessage();
+            String message = data.getMessage();
             threadPool.submit(() -> {
                 try {
                     pipedPlayer.play(TTS.getInstance().getSpeechRaw(voiceName, message));
@@ -92,13 +92,8 @@ public class Server {
     }
 
     private static class SpeakMessageData {
-        private String name;
         private String voiceName;
         private String message;
-
-        public String getName() {
-            return name;
-        }
 
         public String getVoiceName() {
             return voiceName;
