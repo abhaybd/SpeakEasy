@@ -35,6 +35,14 @@ p:last-child {
     margin-bottom: 20vh;
 }
 
+a {
+    color: #00c1f1;
+}
+
+a:visited {
+    color: #a1c1f1;
+}
+
 .title-container {
     display: flex;
     flex-flow: row nowrap;
