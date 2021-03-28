@@ -43,16 +43,6 @@ body {
     text-align: center;
 }
 
-.form * {
-    margin-bottom: 2vh;
-}
-
-.name {
-    margin-top: 130px;
-    align-items: center;
-    font-size: 20px;
-}
-
 body {
     background-color: #282c34;
     color: white;
@@ -69,6 +59,10 @@ button {
     border: none;
     cursor: pointer;
     margin-left: 20px;
+}
+
+#message {
+    max-width: 50em;
 }
 
 #voiceSelector {
