@@ -1,0 +1,83 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Titillium Web', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #282c34;
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    width: 60vw;
+    left: 20vw;
+}
+
+h2 {
+    margin-bottom: 1em;
+    margin-top: 2em;
+    text-align: left;
+    width: 100%;
+}
+
+p {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 1em;
+}
+
+p:last-child {
+    margin-bottom: 20vh;
+}
+
+.title-container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100px;
+}
+
+#logo-container {
+    flex: 3;
+    height: 100px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+#logo {
+    height: 100px;
+    width: 100px;
+    display: block;
+    pointer-events: none;
+}
+
+#title {
+    display: block;
+    flex: 7;
+    font-size: 24;
+    text-align: center;
+}
+
+.disable-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+  
+.disable-drag {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+}
