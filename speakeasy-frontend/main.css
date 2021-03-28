@@ -68,12 +68,9 @@ button {
     font-family: 'Titillium Web', sans-serif;
     border: none;
     cursor: pointer;
-    margin-left: 20px;
 }
 
 #voiceSelector {
-    margin-right: 20px;
-    margin-left: 5px;
     padding-left: 10px;
     padding-right: 10px;
     border : 40px;
