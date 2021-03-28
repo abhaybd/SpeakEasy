@@ -1,12 +1,20 @@
 package org.hoohacks;
 
 import com.google.gson.Gson;
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import javax.sound.sampled.LineUnavailableException;
+import spark.Spark;
+
 import static spark.Spark.*;
 
 public class Server {
     public static final int PORT = 4567;
-    public static final String SAMPLE_MESSAGE = "Hello, World!";
+    public static final String SAMPLE_MESSAGE = "Hello! Would you like this to be your voice?";
     public static final Gson gson = new Gson();
+
+    private static final ExecutorService threadPool = Executors.newCachedThreadPool();
 
     public static void start() {
         // serve static files from src/main/resources/public
@@ -23,6 +31,14 @@ public class Server {
         // Custom 404 page
         notFound("<html><body><h1>Error 404: Page not found</h1></body></html>");
 
+        AudioPlayer pipedPlayer;
+        try {
+            pipedPlayer = new AudioPlayer("CABLE Input (VB-Audio Virtual Cable)");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        AudioPlayer defaultPlayer = new AudioPlayer();
+
         // Get a list of english voices
         get("/voices", (req, res) -> {
             var voices = TTS.getInstance().getVoices();
@@ -32,8 +48,13 @@ public class Server {
         // Play an audio sample of the requested voice
         post("/sample", (req, res) -> {
             String voiceName = gson.fromJson(req.body(), SampleMessageData.class).getVoiceName();
-            AudioPlayer player = new AudioPlayer();
-            player.play(TTS.getInstance().getSpeechRaw(voiceName, SAMPLE_MESSAGE));
+            threadPool.submit(() -> {
+                try {
+                    defaultPlayer.play(TTS.getInstance().getSpeechRaw(voiceName, SAMPLE_MESSAGE));
+                } catch (LineUnavailableException e) {
+                    e.printStackTrace();
+                }
+            });
             return "";
         });
 
@@ -42,14 +63,20 @@ public class Server {
             SpeakMessageData data = gson.fromJson(req.body(), SpeakMessageData.class);
             String voiceName = data.getVoiceName();
             String message = data.getName() + " says " + data.getMessage();
-            AudioPlayer player = new AudioPlayer("CABLE Input (VB-Audio Virtual Cable)");
-            player.play(TTS.getInstance().getSpeechRaw(voiceName, message));
+            threadPool.submit(() -> {
+                try {
+                    pipedPlayer.play(TTS.getInstance().getSpeechRaw(voiceName, message));
+                } catch (LineUnavailableException e) {
+                    e.printStackTrace();
+                }
+            });
             return "";
         });
     }
 
     public static void stop() {
-        spark.Spark.stop();
+        Spark.stop();
+        threadPool.shutdownNow();
     }
 
     public static String getHostUrl() {

@@ -1,8 +1,8 @@
-(function() {
+(function () {
     getVoices().then(voices => {
         if (voices !== null) {
             let dropdown = document.getElementById("voiceSelector");
-            voices.sort((a,b) => {
+            voices.sort((a, b) => {
                 if (a.gender !== b.gender) {
                     return a.gender > b.gender ? 1 : -1;
                 } else {
@@ -17,11 +17,11 @@
                 if (i === 0) {
                     child.setAttribute("selected", "");
                 }
-                child.appendChild(document.createTextNode(`Voice ${i} - ${gender}`));
+                child.appendChild(document.createTextNode(`Voice ${i + 1} - ${gender}`));
                 dropdown.appendChild(child);
             });
 
-            dropdown.onchange = function() {
+            dropdown.onchange = function () {
                 playSample(this.value);
             }
         } else {
@@ -30,7 +30,7 @@
     });
 
     let submitButton = document.getElementById("submit");
-    submitButton.onclick = function() {
+    submitButton.onclick = function () {
         let voiceName = document.getElementById("voiceSelector").value;
         let userName = document.getElementById("name").value;
         let messageBox = document.getElementById("message");
